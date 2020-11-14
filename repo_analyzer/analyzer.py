@@ -166,6 +166,15 @@ class Analyzer:
         return self._summarize(self.__repo.get_issues(), self.__STALE_ISSUES_DAYS)
 
 
+def just(s: str) -> str:
+    """
+    Aligns the given string to the left in a certain way
+    @param s: string
+    @return: resulting string
+    """
+    return s.ljust(50, "_")
+
+
 def main() -> None:
     """
     Entry point
@@ -182,13 +191,13 @@ def main() -> None:
     pull_requests = analyzer.get_pull_requests_stat()
 
     print()
-    print("Number of open pull requests:".ljust(50, "_"), pull_requests[0])
-    print("Number of closed pull requests:".ljust(50, "_"), pull_requests[1])
-    print("Number of stale pull requests:".ljust(50, "_"), pull_requests[2])
+    print(just("Number of open pull requests:"), pull_requests[0])
+    print(just("Number of closed pull requests:"), pull_requests[1])
+    print(just("Number of stale pull requests:"), pull_requests[2])
 
     issues = analyzer.get_issues_stat()
 
     print()
-    print("Number of open issues:".ljust(50, "_"), issues[0])
-    print("Number of closed issues:".ljust(50, "_"), issues[1])
-    print("Number of stale issues:".ljust(50, "_"), issues[2])
+    print(just("Number of open issues:"), issues[0])
+    print(just("Number of closed issues:"), issues[1])
+    print(just("Number of stale issues:"), issues[2])
