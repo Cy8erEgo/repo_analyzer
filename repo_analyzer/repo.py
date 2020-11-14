@@ -119,6 +119,8 @@ class Repository:
         Gets raw info about all contributors regardless of branch,
         sorting them by the number of contributions.
 
+        This method can't filter commits by date. For this you must use the get_commits() method.
+
         When comparing data with data on the site, you must look at the contributors page,
         and not at the repository page.
         @param count: number of contributors
