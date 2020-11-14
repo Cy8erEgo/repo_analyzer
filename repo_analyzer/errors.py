@@ -1,0 +1,2 @@
+class AnalyzerError(Exception):
+    pass
