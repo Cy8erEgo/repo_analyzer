@@ -193,8 +193,11 @@ def main() -> None:
     analyzer = Analyzer(args.url, args.branch, date_from=args.date_from, date_to=args.date_to)
     contributors = analyzer.get_contributors(30)
 
-    print("[Top {} contributors]".format(len(contributors)))
-    analyzer.pprint_contributors(contributors)
+    if contributors:
+        print("Top {} contributors".format(len(contributors)))
+        analyzer.pprint_contributors(contributors)
+    else:
+        print("No contributors")
 
     pull_requests = analyzer.get_pull_requests_stat()
 
