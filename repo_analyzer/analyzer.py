@@ -123,18 +123,10 @@ class Analyzer:
         @param count: contributors count
         @return: list of contributors and their number of commits
         """
-        # get commits for the specified period of time
         date_from = self.__date_from.isoformat() + "Z" if self.__date_from else None
         date_to = self.__date_to.isoformat() + "Z" if self.__date_to else None
 
-        if not date_from and not date_to:
-            rating = []
-            contributors_raw = self.__repo.get_contributors(count)
-
-            for c in contributors_raw:
-                rating.append((c["login"], c["contributions"]))
-            return rating
-
+        # get commits for the specified period of time
         commits = self.__repo.get_commits(date_from, date_to)
 
         # collect statistics on commits
