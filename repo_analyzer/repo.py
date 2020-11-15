@@ -7,6 +7,7 @@ class State:
     """
     Constants storing the names of states of pull requests and issues.
     """
+
     OPEN = "open"
     CLOSED = "closed"
     ALL = "all"
@@ -16,6 +17,7 @@ class Sorting:
     """
     Constants storing the names of sorting types of pull requests and issues.
     """
+
     CREATE = "created"
     UPDATE = "updated"
 

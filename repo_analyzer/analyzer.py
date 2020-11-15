@@ -182,7 +182,9 @@ def main() -> None:
     """
     print("RepoAnalyzer v1.0\nBy @cyberego\n")
 
-    analyzer = Analyzer(args.url, args.branch, date_from=args.date_from, date_to=args.date_to)
+    analyzer = Analyzer(
+        args.url, args.branch, date_from=args.date_from, date_to=args.date_to
+    )
     contributors = analyzer.get_contributors(30)
 
     if contributors:
