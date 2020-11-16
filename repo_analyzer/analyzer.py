@@ -20,18 +20,18 @@ if not all(GITHUB_AUTH):
 
 
 class Analyzer:
-    __STALE_PULL_REQUESTS_DAYS = 30
-    __STALE_ISSUES_DAYS = 14
+    _STALE_PULL_REQUESTS_DAYS = 30
+    _STALE_ISSUES_DAYS = 14
 
     def __init__(self, repo_url: str, branch: str = "master", date_from: str = None, date_to: str = None):
-        self.__repo_url = repo_url
-        self.__date_from = self._parse_time(date_from)
-        self.__date_to = self._parse_time(date_to)
-        self.__repo_owner, self._repo_name = self._parse_url(repo_url)
-        self.__branch = branch
+        self._repo_url = repo_url
+        self._date_from = self._parse_time(date_from)
+        self._date_to = self._parse_time(date_to)
+        self._repo_owner, self._repo_name = self._parse_url(repo_url)
+        self._branch = branch
 
-        self.__repo = Repository(
-            self.__repo_owner, self._repo_name, self.__branch, auth=GITHUB_AUTH
+        self._repo = Repository(
+            self._repo_owner, self._repo_name, self._branch, auth=GITHUB_AUTH
         )
 
     @staticmethod
@@ -76,13 +76,13 @@ class Analyzer:
         for c in contributors:
             print("{} {}".format(c[0].ljust(50, "_"), c[1]))
 
-    def __filter_by_date(self, date: datetime.datetime) -> bool:
+    def _filter_by_date(self, date: datetime.datetime) -> bool:
         """
         Checks if the specified date falls within the specified time period (self._date_from, self._date_to).
         @param date: datetime object
         @return: True of False
         """
-        if (self.__date_from and date < self.__date_from) or (self.__date_to and date > self.__date_to):
+        if (self._date_from and date < self._date_from) or (self._date_to and date > self._date_to):
             return False
         return True
 
@@ -104,7 +104,7 @@ class Analyzer:
             # filter elements by date
             created_at = self._parse_time(element["created_at"], source="api")
 
-            if not self.__filter_by_date(created_at):
+            if not self._filter_by_date(created_at):
                 continue
 
             # collect statistics
@@ -123,11 +123,11 @@ class Analyzer:
         @param count: contributors count
         @return: list of contributors and their number of commits
         """
-        date_from = self.__date_from.isoformat() + "Z" if self.__date_from else None
-        date_to = self.__date_to.isoformat() + "Z" if self.__date_to else None
+        date_from = self._date_from.isoformat() + "Z" if self._date_from else None
+        date_to = self._date_to.isoformat() + "Z" if self._date_to else None
 
         # get commits for the specified period of time
-        commits = self.__repo.get_commits(date_from, date_to)
+        commits = self._repo.get_commits(date_from, date_to)
 
         # collect statistics on commits
         rating = defaultdict(int)
@@ -155,7 +155,7 @@ class Analyzer:
         @return: number of open, closed and stale pull requests
         """
         return self._summarize(
-            self.__repo.get_pull_requests(), self.__STALE_PULL_REQUESTS_DAYS
+            self._repo.get_pull_requests(), self._STALE_PULL_REQUESTS_DAYS
         )
 
     def get_issues_stat(self) -> Tuple[int, int, int]:
@@ -163,7 +163,7 @@ class Analyzer:
         Gets statistics on the number of open, closed and stale issues
         @return: number of open, closed and stale issues
         """
-        return self._summarize(self.__repo.get_issues(), self.__STALE_ISSUES_DAYS)
+        return self._summarize(self._repo.get_issues(), self._STALE_ISSUES_DAYS)
 
 
 def just(s: str) -> str:
